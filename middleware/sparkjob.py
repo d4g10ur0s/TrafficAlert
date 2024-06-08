@@ -3,7 +3,7 @@ import json
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType , TimestampType
+from pyspark.sql.types import StructType, StructField, StringType, FloatType, IntegerType , TimestampType
 
 json_schema = StructType([
   StructField("name", StringType(), True),
@@ -42,26 +42,9 @@ if __name__ == "__main__":    # Checking validity of Spark submission command
     value_df = lines.select(from_json(col("value").cast("string"),json_schema).alias("value"))
     # unpack everything
     value_df = value_df.select(*[f"value.{n}" for n in json_schema.names])
-    new_df = value_df.withColumn("time", col('time').cast(TimestampType()))\
-                        .groupBy(col("time"), col("link")).count()
+    new_df = value_df.select(col('time').cast(TimestampType()), col("link"), col("name"), col("v").cast(FloatType())) \
+                     .groupBy(col("time"), col("link")) \
+                     .agg(avg("v").alias("average_velocity"), count(col("name")).alias("name_count"))
+
     query = new_df.writeStream.outputMode("complete").format("console").start()
     query.awaitTermination()
-
-    #query = new_df\
-    #        .writeStream\
-    #        .outputMode("update")\
-    #        .format("console")\
-    #        .start().awaitTermination()
-    # Writing dataframe to console in complete mode
-    #query = lines\
-    #        .writeStream\
-    #        .format("console")\
-    #        .outputMode("complete")\
-    #        .start()\
-    #        .awaitTermination()
-    #query = value_df\
-    #        .writeStream\
-    #        .outputMode("append")\
-    #        .format("console")\
-    #        .start()    # Terminates the stream on abort
-    #query.awaitTermination()
