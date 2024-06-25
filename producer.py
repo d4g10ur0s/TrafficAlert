@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 
 import datetime as dt
+import time
 
 def getVehicles():
     df = pd.read_csv('vehicle_dataset.csv')# read csv file
@@ -31,7 +32,7 @@ def main():
     # get vecicles
     df = getVehicles()
     # iterate over vehicles
-    for i in range(0 , int(df['t'].max()*1/100) , 5):# start is 0 , end is max time , move every 5 seconds
+    for i in range(0 , int(df['t'].max()*10/100) , 5):# start is 0 , end is max time , move every 5 seconds
         currentTime = run_time + dt.timedelta(seconds=i)
         print(str(currentTime))
         # 1. find what to send
@@ -40,10 +41,11 @@ def main():
         for j in range(len(to_send)) :
             try : # AttributeError when no car
                 data = dataFormat(to_send.iloc[j])
-                data['time'] = run_time.strftime('%Y-%m-%d %H:%M:%S')
+                data['time'] = currentTime.strftime('%Y-%m-%d %H:%M:%S')
                 future = producer.send('vehicle_positions' , data)
             except AttributeError :
                 print("No Cars")
+        time.sleep(2)
 
 if __name__=='__main__':
     main()
