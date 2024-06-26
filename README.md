@@ -49,3 +49,17 @@ python3 -m venv .venv_name
 source .venv_name/bin/activate
 pip install pyspark
 ```
+
+## Start using bash scripts
+
+```
+# for kafka streaming only
+sudo chmod +x kafka_start.sh
+./kafka_start.sh
+```
+
+```
+# for kafka to mongo streaming
+sudo chmod +x mongo_start.sh
+./mongo_start.sh
+```
