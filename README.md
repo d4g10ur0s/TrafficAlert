@@ -22,6 +22,20 @@ bin/kafka-server-start.sh config/server.properties
 bin/kafka-topics.sh --create --topic TopicName --bootstrap-server localhost:9092
 ```
 
+- Work with kafka-python
+
+```
+sudo apt install python3-venv
+python3 -m venv .venv_name
+# open virtual environment
+source .venv_name/bin/activate
+pip install kafka-python
+```
+
+- Handling casual kafka.vendor.six.moves Error
+
+ Open the corresponding file using a text editor . Then comment the import command for kafka.vendor.six.moves . 
+
 ## Spark Installation
 
 - Configure Java Dependencies
