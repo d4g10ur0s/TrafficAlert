@@ -24,6 +24,14 @@ bin/kafka-topics.sh --create --topic TopicName --bootstrap-server localhost:9092
 
 ## Spark Installation
 
+- Configure Java Dependencies
+
+```
+sudo apt install openjdk-17-jdk openjdk-17-jre
+sudo update-alternatives --config java
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+```
+
 - Download files from : https://spark.apache.org/downloads.html
 
 - Extract the files and make a new directory containing them
