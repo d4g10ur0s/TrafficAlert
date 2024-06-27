@@ -42,10 +42,11 @@ topics = sys.argv[3]
 
 # desired schema
 schema = StructType([
-    StructField("time", StringType(), True),
+    StructField("time", TimestampType(), True),
     StructField("link", StringType(), True),
-    StructField("v", IntegerType()),  # Change to IntegerType if v is a whole number
-    StructField("name", StringType()),  # Change to DoubleType if vspeed is a decimal number
+    StructField("vspeed", DoubleType()),
+    StructField("vcount", IntegerType()),
+    StructField("name", StringType()),
 ])
 # data schema
 json_schema = StructType([
