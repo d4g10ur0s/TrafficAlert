@@ -15,15 +15,8 @@ gt = dt.datetime(year=2024, month=6, day=26, hour=int(low[0]), minute=int(low[1]
 lt = dt.datetime(year=2024, month=6, day=26, hour=int(great[0]), minute=int(great[1]), second=int(great[2]), tzinfo=dt.timezone.utc)
 gt = gt.isoformat()
 lt = lt.isoformat()
-# set up the matching query
-pipeline = None
-if(sys.argv[3])==True :
-    pipeline = f'''[ {{"$match": {{"time": {{"$gt": ISODate('{gt}'), "$lt": ISODate('{lt}')}}}}}},
-                     {{"$sort": {{"vcount": 1}}}}, {{"$limit": 1 }}]'''
-else :
-    pipeline = f'''[ {{"$match": {{"time": {{"$gt": ISODate('{gt}'), "$lt": ISODate('{lt}')}}}}}},
-                     {{"$sort": {{"vspeed": -1}}}}, {{"$limit": 1 }}]'''
-
+pipeline = f'''[ {{"$match": {{"time": {{"$gt": ISODate('{gt}'), "$lt": ISODate('{lt}')}}}}}},
+                 {{"$sort": {{"vcount": 1}}}}, {{"$limit": 1 }}]'''
 # processed data schema
 schema = StructType([
     StructField("time", TimestampType(), True),

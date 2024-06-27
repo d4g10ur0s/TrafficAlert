@@ -3,12 +3,12 @@ import subprocess
 import os
 
 # get the least traffic
-def query1():
+def query1(traffic=True):
     script_path = os.path.abspath("mongo_read.sh")
-    arguments_low = input("Give low time (hh:mm:ss) :").split(':')
-    arguments_great = input("Give great time (hh:mm:ss) :").split(':')
+    arguments_low = input("Give low time (hh:mm:ss) :")
+    arguments_great = input("Give great time (hh:mm:ss) :")
     # call the script with arguments
-    process = subprocess.run([script_path] + arguments_low + arguments_great)
+    process = subprocess.run([script_path] + [arguments_low , arguments_great ,str(traffic)])
     # check the return code
     if process.returncode == 0:
         print("Script ran successfully")
@@ -19,6 +19,6 @@ choice = input("Choose Query \n (1,2,3)")
 if int(choice)==1:
     query1()
 elif int(choice)==2:
-    query2()
+    query1(traffic=False)
 else:
     query3()
