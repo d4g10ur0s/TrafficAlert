@@ -121,3 +121,7 @@ sudo chmod +x kafka_start.sh
 sudo chmod +x mongo_start.sh
 ./mongo_start.sh
 ```
+
+## Run the demo
+
+- Run the mongoMenu.py to perform 3 types of queries . You may find the queries in the corresponding .sh and .py files .
